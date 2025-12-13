@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Générateur de Compliments Absurdes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0px #ff6b6b;
+            animation: wobble 2s ease-in-out infinite;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .compliment-box {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .compliment-box:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.05);
+        }
+
+        .compliment {
+            font-size: 1.5rem;
+            color: #333;
+            line-height: 1.6;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .emoji {
+            font-size: 4rem;
+            margin: 1rem 0;
+            animation: bounce 0.5s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            font-family: inherit;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 8px 30px rgba(255,107,107,0.6);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .footer {
+            color: rgba(255,255,255,0.7);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .dancing-emoji {
+            display: inline-block;
+            animation: dance 0.5s ease infinite alternate;
+        }
+
+        @keyframes dance {
+            from { transform: translateY(0) rotate(-10deg); }
+            to { transform: translateY(-5px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Le Générateur de Compliments Absurdes</h1>
+
+        <div class="compliment-box">
+            <div class="emoji" id="emoji">🎉</div>
+            <p class="compliment" id="compliment">Cliquez sur le bouton pour recevoir un compliment totalement absurde !</p>
+        </div>
+
+        <button onclick="generateCompliment()">
+            ✨ Complimente-moi ! ✨
+        </button>
+
+        <p class="footer">
+            Fait avec <span class="dancing-emoji">❤️</span> et beaucoup de n'importe quoi
+        </p>
+    </div>
+
+    <script>
+        const adjectives = [
+            "magnifiquement chaotique",
+            "délicieusement bizarre",
+            "épiquement majestueux",
+            "cosmiquement incroyable",
+            "fantastiquement déconcertant",
+            "glorieusement absurde",
+            "mystérieusement génial",
+            "ridiculement awesome",
+            "superbement farfelu",
+            "légendairement unique"
+        ];
+
+        const subjects = [
+            "Ton aura",
+            "Ta façon de cligner des yeux",
+            "Ton coude gauche",
+            "Ta capacité à respirer",
+            "Ton sourcil droit",
+            "Ta manière de tenir une cuillère",
+            "Ton petit orteil",
+            "Ta démarche le mardi",
+            "Ton ombre",
+            "Ta façon de regarder les nuages"
+        ];
+
+        const comparisons = [
+            "comme une licorne qui fait du skateboard",
+            "tel un flamant rose en smoking",
+            "comme un pandas qui danse la salsa",
+            "tel un arc-en-ciel fait de pizza",
+            "comme un astronaute sur un tricycle",
+            "tel un pingouin qui joue du ukulélé",
+            "comme une patate qui a gagné au loto",
+            "tel un ninja en chaussons",
+            "comme un dinosaure qui fait du yoga",
+            "tel un chat qui parle français"
+        ];
+
+        const emojis = ["🦄", "🌈", "🎸", "🚀", "🎪", "🦩", "🎭", "🌟", "🎨", "🦋", "🍕", "🐼", "🎠", "🌺", "🎪"];
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateCompliment() {
+            const subject = getRandomItem(subjects);
+            const adjective = getRandomItem(adjectives);
+            const comparison = getRandomItem(comparisons);
+            const emoji = getRandomItem(emojis);
+
+            const compliment = `${subject} est ${adjective}, ${comparison} !`;
+
+            document.getElementById('compliment').textContent = compliment;
+            document.getElementById('emoji').textContent = emoji;
+
+            // Explosion de confettis !
+            for (let i = 0; i < 30; i++) {
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(confetti);
+
+            setTimeout(() => confetti.remove(), 3000);
+        }
+
+        // Un petit compliment au chargement
+        setTimeout(() => {
+            generateCompliment();
+        }, 1000);
+    </script>
+</body>
+</html>

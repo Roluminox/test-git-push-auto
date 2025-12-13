@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:\\Dev\\ServiceDocker\\agent-local\\hooks\\approval_hook.py\"",
+            "timeout": 350
+          }
+        ]
+      }
+    ]
+  }
+}
